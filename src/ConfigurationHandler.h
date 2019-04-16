@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <fstream>
 
-#define CONFIG_NAME "pvi_config"
+#define CONFIG_NAME "pvi.ini"
 #define LINE_LENGTH 255
 
 /*

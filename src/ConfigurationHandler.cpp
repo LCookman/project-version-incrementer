@@ -19,7 +19,7 @@ ConfigurationHandler::ConfigurationHandler ()
 }
 
 /*****************************************************************************
-Destructor:				~ConfigurationHandler
+Destructor:		  ~ConfigurationHandler
 
 Description:      Default Destructor for a Configuration Handler.
 
@@ -32,6 +32,15 @@ ConfigurationHandler::~ConfigurationHandler ()
 	delete mpConfigFile;
 }
 
+/*****************************************************************************
+Method:			  InitializeConfigFile
+
+Description:      Construct the configuration file for PVI
+
+Parameters:       None
+
+Return            Whether or not the config file was created successfully
+*****************************************************************************/
 bool ConfigurationHandler::InitailizeConfigFile ()
 {
 	// Include try/catch in main
@@ -43,15 +52,15 @@ bool ConfigurationHandler::InitailizeConfigFile ()
 }
 
 /*****************************************************************************
-Function:					CheckConfigFile
+Function:		  CheckConfigFile
 
 Description:      This function will check to see if the config file exists
-									in the current working directory within /.git/hooks
+						in the current working directory
 
-Parameters:       pCWD - The path to the current working directory.
+Parameters:       None
 
 Return            True  - If the config file exists.
-									False - If the config file does not exist.
+				  False - If the config file does not exist.
 *****************************************************************************/
 bool ConfigurationHandler::CheckConfigFile ()
 {
@@ -72,12 +81,13 @@ Return            None
 *****************************************************************************/
 void ConfigurationHandler::CreateConfigFile ()
 {
-	if (!mpConfigFile->good ())
-	{
-		throw new PviException ("Error! Could not create the pvi_config file. Aborting PVI Program!");
-	}
+//	if (!mpConfigFile->good ())
+//	{
+//		throw new PviException ("Error! Could not create the pvi_config file. Aborting PVI Program!");
+//	}
 
 	mpConfigFile->open (CONFIG_NAME);
+
 	// ./pvi [filename or regex] [keyword] [map keyword] [map value increment] [flags]
 	*mpConfigFile << "# Command Specific Arguments" << std::endl;
 	*mpConfigFile << "# These values modify how the ./pvi command is ran and what it modifies." << std::endl;
@@ -88,7 +98,7 @@ void ConfigurationHandler::CreateConfigFile ()
 	// -k stands for the key to increment
 	// -i stands for the number to increment the key by.
 	// Commit message example. "This is a commit message -k:minor -i:1" -- After Commit | Version 1.4.13
-	// Commit message example. "This is a commit messgae -k:release -i:1" -- After Commit | Version 2.0.0
+	// Commit message example. "This is a commit message -k:release -i:1" -- After Commit | Version 2.0.0
 	// Commit message example. "This is a commit message -k:major -i:2" -- After Commit | Version 1.6.0
 	// Commit message example. "This is a commit message -k:major,minor -i:1,2" -- After Commit | Version 1.5.14
 	*mpConfigFile << "map keyword:minor" << std::endl;
@@ -101,7 +111,7 @@ void ConfigurationHandler::CreateConfigFile ()
 
 	// Specifies the default increment values per each key listed above. If nothing is specified the value is incremented by 1.
 	// Note that the key will only be incremented if specified in the commit message.
-	*mpConfigFile << "default_values:1,1,1" << std::endl;
+	*mpConfigFile << "default_values:0,0,0" << std::endl;
 
 	// Determines if the "filename" config option should accept regular expressions.
 	*mpConfigFile << "regex:false" << std::endl;
