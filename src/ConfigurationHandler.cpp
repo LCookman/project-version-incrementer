@@ -43,12 +43,14 @@ Return            Whether or not the config file was created successfully
 *****************************************************************************/
 bool ConfigurationHandler::InitailizeConfigFile ()
 {
+	const bool bExists = CheckConfigFile ();
 	// Include try/catch in main
-	if (!CheckConfigFile ())
+	if (bExists)
 	{
 		CreateConfigFile ();
 		mbNewConfig = true;
 	}
+	return bExists;
 }
 
 /*****************************************************************************
